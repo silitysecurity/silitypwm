@@ -16,11 +16,11 @@ bufferSize = 128 * 1024
 
 
 def clear():
-  
+
     # for windows
     if name == 'nt':
         _ = system('cls')
-  
+
     # for mac and linux(here, os.name is 'posix')
     else:
         _ = system('clear')
@@ -67,19 +67,24 @@ def login():
 
 def menu():
     print("Menu:\n1 - Add password\n2 - Remove password\n3 - Access a password\n4 - Exit\n")
-    option = int(input(colored("Choose an option: ", "green")))
-
-    if option == 1:
-        addPassword()
-    elif option == 2:
-        removePassword()
-    elif option == 3:
-        accessPassword()
-    elif option == 4:
-        exit()
-    else:
+    option = input(colored("Choose an option: ", "green"))
+    try:
+        option = int(option)
+        if option == 1:
+            addPassword()
+        elif option == 2:
+            removePassword()
+        elif option == 3:
+            accessPassword()
+        elif option == 4:
+            exit()
+        else:
+            clear()
+            print(colored("Invalid option.", "red"))
+            menu()
+    except:
         clear()
-        print("Invalid option.")
+        print(colored("Option not a number!", "red"))
         menu()
 
 
@@ -87,7 +92,8 @@ def addPassword():
     clear()
     names = os.listdir(password_folder_path)
     names = [x.split('.')[0] for x in names]
-    name = input(colored("Under what name should the password be saved?: ", "green"))
+    name = input(
+        colored("Under what name should the password be saved?: ", "green"))
 
     if name not in names:
         password = getpass("Please enter the password: ")
@@ -118,7 +124,7 @@ def addPassword():
                 clear()
                 print(colored("Passwords didn't match. Try again.", "red"))
                 menu()
-    else: 
+    else:
         clear()
         print(colored("A password with that name already exists", "red"))
         menu()
