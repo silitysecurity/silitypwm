@@ -157,11 +157,12 @@ def accessPassword():
     print("")
     which_password = input(
         colored("Which password do you want to access? :", "green"))
+    print(which_password)
     if which_password in names:
         password_file_path = password_folder_path + \
-            str("/{}.json").format(name)
+            str("/{}.json").format(which_password)
         temporary_path = password_folder_path + \
-            str("/{}_temp.json").format(name)
+            str("/{}_temp.json").format(which_password)
         pyAesCrypt.decryptFile(
             password_file_path, temporary_path, master_password)
         with open(temporary_path, "r") as decrypted_file:
